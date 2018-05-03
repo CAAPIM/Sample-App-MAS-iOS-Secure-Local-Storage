@@ -9,7 +9,7 @@ This sample app uses the MASFoundation, MASStorage and MASUI frameworks of the M
 
 ## Get Started
 1. Open a terminal window to the top level folder of this Sample App (ie: ~/iOS - Secure Cloud and Local Storage).
-2. In Terminal type: `pod update`
+2. In Terminal type: `pod update`  
    If this fails try: `pod install`
 3. Open the .xcworkspace (ie: StorageApp.xcworkspace).
 4. In the CA OAuth Manager, create an app, and export the msso_config file (https://you_server_name:8443/oauth/manager). For help with this file, see [iOS Guide](https://www.ca.com/us/developers/mas/docs.html?id=1).
