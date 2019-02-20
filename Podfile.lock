@@ -1,14 +1,14 @@
 PODS:
-  - MASFoundation (1.8.00)
-  - MASStorage (1.8.00):
-    - MASFoundation (= 1.8.00)
-  - MASUI (1.8.00):
-    - MASFoundation (= 1.8.00)
+  - MASFoundation (1.9.10)
+  - MASStorage (1.9.10):
+    - MASFoundation (= 1.9.10)
+  - MASUI (1.9.10):
+    - MASFoundation (= 1.9.10)
 
 DEPENDENCIES:
-  - MASFoundation (~> 1.8.00)
-  - MASStorage (~> 1.8.00)
-  - MASUI (~> 1.8.00)
+  - MASFoundation (~> 1.9.10)
+  - MASStorage (~> 1.9.10)
+  - MASUI (~> 1.9.10)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -17,10 +17,10 @@ SPEC REPOS:
     - MASUI
 
 SPEC CHECKSUMS:
-  MASFoundation: a9ca44f997ec5ad7b5efeafc2f1d7e0ecb234ee8
-  MASStorage: f542a05d71170590dbda9b87bc8fdcac7d722d2c
-  MASUI: 7eddd90d652a312a6a31924c0f080cc654bcffe7
+  MASFoundation: 3f8354c19f67fea99c8b6d5f22892febaf224ad5
+  MASStorage: 701c8b229d4e0e167b6ba9469cb513e5140ce464
+  MASUI: 286430a8d7ef6e3a9af6e87139bf0286ffe94ced
 
-PODFILE CHECKSUM: 643bf1a9b4f219ca1e571fd851da9a544eeb139b
+PODFILE CHECKSUM: bf51770d79791fb55d8ef7ca33e6054c73fc9432
 
 COCOAPODS: 1.5.3
