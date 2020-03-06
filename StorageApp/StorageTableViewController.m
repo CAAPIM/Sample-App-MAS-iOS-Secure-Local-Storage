@@ -13,8 +13,8 @@
 #import <MASFoundation/MASFoundation.h>
 #import <MASStorage/MASStorage.h>
 
-static NSString *SampleUser = @"YOU USERNAME";
-static NSString *SampleUserPassword = @"YOU PASSWORD";
+static NSString *SampleUser = @"admin";
+static NSString *SampleUserPassword = @"7layer";
 
 //Action Sheet
 static const NSInteger ADD_SHEET = 10;
@@ -109,6 +109,17 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    if ([self.storageButton.title isEqualToString:@"Local"]) {
+        
+        [self switchStorage];
+        
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        self.navigationItem.leftBarButtonItem = nil;
+    }
 }
 
 
