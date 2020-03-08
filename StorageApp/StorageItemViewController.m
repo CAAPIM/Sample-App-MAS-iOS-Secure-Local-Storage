@@ -100,16 +100,16 @@
 
 - (void)getStorageItemDetails
 {
-    if (self.isCloudStorageItem) {
-
-        [MASCloudStorage findObjectUsingKey:[self.selectedItem objectForKey:@"key"] mode:self.mode completion:^(MASObject *object, NSError *error) {
-
-            self.objectDetails = object;
-            self.resultText.text = [self payloadTypeAsString];
-            self.resultImage.image = [self payloadTypeAsImage];
-        }];
-    }
-    else {
+//    if (self.isCloudStorageItem) {
+//
+//        [MASCloudStorage findObjectUsingKey:[self.selectedItem objectForKey:@"key"] mode:self.mode completion:^(MASObject *object, NSError *error) {
+//
+//            self.objectDetails = object;
+//            self.resultText.text = [self payloadTypeAsString];
+//            self.resultImage.image = [self payloadTypeAsImage];
+//        }];
+//    }
+//    else {
         
         [MASLocalStorage findObjectUsingKey:[self.selectedItem objectForKey:@"key"] mode:self.mode completion:^(MASObject *object, NSError *error) {
 
@@ -118,49 +118,49 @@
             self.resultImage.image = [self payloadTypeAsImage];
 
         }];
-    }
+//    }
 }
 
 - (void)updateDataToStorage
 {
-    if (self.isCloudStorageItem) {
-
-        NSString *newString = @"Testing Update";
-        
-        //Update Cloud Storage Item
-        [MASCloudStorage saveObject:newString withKey:[self.objectDetails objectForKey:@"key"] type:@"text/plain" mode:self.mode completion:^(BOOL success, NSError *error) {
-            
-            if (!error) {
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
-                                                                               message:@"CloudStorageItem updated Successfully"
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                                        style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction * action) {}];
-                
-                [alert addAction:defaultAction];
-                
-                [self presentViewController:alert animated:YES completion:nil];
-            }
-            else {
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
-                                                                               message:[error localizedDescription]
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                                        style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction * action) {}];
-                
-                [alert addAction:defaultAction];
-                
-                [self presentViewController:alert animated:YES completion:nil];
-            }
-        }];
-    }
-    else {
+//    if (self.isCloudStorageItem) {
+//
+//        NSString *newString = @"Testing Update";
+//
+//        //Update Cloud Storage Item
+//        [MASCloudStorage saveObject:newString withKey:[self.objectDetails objectForKey:@"key"] type:@"text/plain" mode:self.mode completion:^(BOOL success, NSError *error) {
+//
+//            if (!error) {
+//
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert"
+//                                                                               message:@"CloudStorageItem updated Successfully"
+//                                                                        preferredStyle:UIAlertControllerStyleAlert];
+//
+//                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+//                                                                        style:UIAlertActionStyleDefault
+//                                                                      handler:^(UIAlertAction * action) {}];
+//
+//                [alert addAction:defaultAction];
+//
+//                [self presentViewController:alert animated:YES completion:nil];
+//            }
+//            else {
+//
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
+//                                                                               message:[error localizedDescription]
+//                                                                        preferredStyle:UIAlertControllerStyleAlert];
+//
+//                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+//                                                                        style:UIAlertActionStyleDefault
+//                                                                      handler:^(UIAlertAction * action) {}];
+//
+//                [alert addAction:defaultAction];
+//
+//                [self presentViewController:alert animated:YES completion:nil];
+//            }
+//        }];
+//    }
+//    else {
         
         NSString *newString = @"Testing Update";
         
@@ -197,7 +197,7 @@
             }
 
         }];
-    }
+//    }
 }
 
 
