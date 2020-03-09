@@ -13,8 +13,8 @@
 #import <MASFoundation/MASFoundation.h>
 #import <MASStorage/MASStorage.h>
 
-static NSString *SampleUser = @"admin";
-static NSString *SampleUserPassword = @"7layer";
+static NSString *SampleUser = @"YOU USERNAME";
+static NSString *SampleUserPassword = @"YOU PASSWORD";
 
 //Action Sheet
 static const NSInteger ADD_SHEET = 10;
