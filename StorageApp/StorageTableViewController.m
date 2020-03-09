@@ -111,6 +111,17 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+
+    if ([self.storageButton.title isEqualToString:@"Local"]) {
+
+        [self switchStorage];
+
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -178,40 +189,40 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        if ([self.storageButton.title isEqualToString:@"Local"]) {
-            [MASCloudStorage deleteObjectUsingKey:[[self.storageItems objectAtIndex:indexPath.row] objectForKey:@"key"] mode:self.segment.selectedSegmentIndex completion:^(BOOL success, NSError *error) {
-                
-                if (!error) {
-                    
-                    [self.storageItems removeObjectAtIndex:indexPath.row];
-                    
-                    if ([self.storageItems count] == 0) {
-                        
-                        [tableView reloadData];
-                    }
-                    else {
-                        
-                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    }
-                }
-                else {
-                    
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
-                                                                                   message:[error localizedDescription]
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                                            style:UIAlertActionStyleDefault
-                                                                          handler:^(UIAlertAction * action) {}];
-                    
-                    [alert addAction:defaultAction];
-                    
-                    [self presentViewController:alert animated:YES completion:nil];
-                }
-                
-            }];
-        }
-        else {
+//        if ([self.storageButton.title isEqualToString:@"Local"]) {
+//            [MASCloudStorage deleteObjectUsingKey:[[self.storageItems objectAtIndex:indexPath.row] objectForKey:@"key"] mode:self.segment.selectedSegmentIndex completion:^(BOOL success, NSError *error) {
+//
+//                if (!error) {
+//
+//                    [self.storageItems removeObjectAtIndex:indexPath.row];
+//
+//                    if ([self.storageItems count] == 0) {
+//
+//                        [tableView reloadData];
+//                    }
+//                    else {
+//
+//                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//                    }
+//                }
+//                else {
+//
+//                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
+//                                                                                   message:[error localizedDescription]
+//                                                                            preferredStyle:UIAlertControllerStyleAlert];
+//
+//                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+//                                                                            style:UIAlertActionStyleDefault
+//                                                                          handler:^(UIAlertAction * action) {}];
+//
+//                    [alert addAction:defaultAction];
+//
+//                    [self presentViewController:alert animated:YES completion:nil];
+//                }
+//
+//            }];
+//        }
+//        else {
 
             [MASLocalStorage deleteObjectUsingKey:[[self.storageItems objectAtIndex:indexPath.row] objectForKey:@"key"] mode:self.segment.selectedSegmentIndex completion:^(BOOL success, NSError *error) {
                 
@@ -244,7 +255,7 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
                 }
                 
             }];
-        }
+        //}
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
@@ -330,14 +341,14 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
 
 - (void)addDataToStorage:(NSUInteger)type
 {
-    if ([self.storageButton.title isEqualToString:@"Local"]) {
-        
-        [self addDataToCloudStorage:type];
-    }
-    else {
+//    if ([self.storageButton.title isEqualToString:@"Local"]) {
+//
+//        [self addDataToCloudStorage:type];
+//    }
+//    else {
         
         [self addDataToLocalStorage:type];
-    }
+//    }
 }
 
 
@@ -415,96 +426,96 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
 }
 
 
-- (void)addDataToCloudStorage:(NSUInteger)type
-{
-    __weak typeof(self) weakSelf = self;
-    
-    NSString *newString = [NSString stringWithFormat:@"NewCloudStorage%d",(int)[self.storageItems count] +1];
-    NSObject *messageData;
-    NSString *messageType;
-    
-    switch (type) {
-            
-        case ADD_TEXT_SHEET:
-        {
-            messageData = @"This is a TEXT message";
-            messageType = @"text/plain";
-            break;
-        }
-            
-        case ADD_IMAGE_SHEET:
-        {
-            NSString* filePath = [[NSBundle mainBundle] pathForResource:@"butters" ofType:@"png"];
-            messageData = [NSData dataWithContentsOfFile:filePath];
-            messageType = @"image/png";
-            break;
-        }
-            
-        case ADD_DATA_SHEET:
-        {
-            NSString* filePath = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"jpg"];
-            messageData = [NSData dataWithContentsOfFile:filePath];
-            messageType = @"application/octet-stream";
-            break;
-        }
-            
-        case ADD_OVERIMAGE_SHEET:
-        {
-            NSString* filePath = [[NSBundle mainBundle] pathForResource:@"oversize" ofType:@"jpg"];
-            messageData = [NSData dataWithContentsOfFile:filePath];
-            messageType = @"image/png";
-            break;
-        }
-            
-        case ADD_INVALID_DATA_SHEET:
-        {
-            UIImage *myImage = [UIImage imageNamed:@"image.jpg"];
-            messageData = myImage;
-            messageType = @"image/png";
-            break;
-        }
-    }
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    [MASCloudStorage saveObject:messageData withKey:newString type:messageType mode:self.segment.selectedSegmentIndex completion:^(BOOL success, NSError *error) {
-        
-        if (!error) {
-            
-            [weakSelf refreshStorageList];
-        }
-        else {
-            NSString *errorMessage = [NSString stringWithFormat:@"%@ : %@",[error localizedDescription],[error userInfo][MASResponseInfoBodyInfoKey]];
-            
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
-                                                                           message:errorMessage                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                                    style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action) {}];
-            
-            [alert addAction:defaultAction];
-            
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-        
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }];
-}
+//- (void)addDataToCloudStorage:(NSUInteger)type
+//{
+//    __weak typeof(self) weakSelf = self;
+//
+//    NSString *newString = [NSString stringWithFormat:@"NewCloudStorage%d",(int)[self.storageItems count] +1];
+//    NSObject *messageData;
+//    NSString *messageType;
+//
+//    switch (type) {
+//
+//        case ADD_TEXT_SHEET:
+//        {
+//            messageData = @"This is a TEXT message";
+//            messageType = @"text/plain";
+//            break;
+//        }
+//
+//        case ADD_IMAGE_SHEET:
+//        {
+//            NSString* filePath = [[NSBundle mainBundle] pathForResource:@"butters" ofType:@"png"];
+//            messageData = [NSData dataWithContentsOfFile:filePath];
+//            messageType = @"image/png";
+//            break;
+//        }
+//
+//        case ADD_DATA_SHEET:
+//        {
+//            NSString* filePath = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"jpg"];
+//            messageData = [NSData dataWithContentsOfFile:filePath];
+//            messageType = @"application/octet-stream";
+//            break;
+//        }
+//
+//        case ADD_OVERIMAGE_SHEET:
+//        {
+//            NSString* filePath = [[NSBundle mainBundle] pathForResource:@"oversize" ofType:@"jpg"];
+//            messageData = [NSData dataWithContentsOfFile:filePath];
+//            messageType = @"image/png";
+//            break;
+//        }
+//
+//        case ADD_INVALID_DATA_SHEET:
+//        {
+//            UIImage *myImage = [UIImage imageNamed:@"image.jpg"];
+//            messageData = myImage;
+//            messageType = @"image/png";
+//            break;
+//        }
+//    }
+//
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//
+//    [MASCloudStorage saveObject:messageData withKey:newString type:messageType mode:self.segment.selectedSegmentIndex completion:^(BOOL success, NSError *error) {
+//
+//        if (!error) {
+//
+//            [weakSelf refreshStorageList];
+//        }
+//        else {
+//            NSString *errorMessage = [NSString stringWithFormat:@"%@ : %@",[error localizedDescription],[error userInfo][MASResponseInfoBodyInfoKey]];
+//
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
+//                                                                           message:errorMessage                                                                    preferredStyle:UIAlertControllerStyleAlert];
+//
+//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+//                                                                    style:UIAlertActionStyleDefault
+//                                                                  handler:^(UIAlertAction * action) {}];
+//
+//            [alert addAction:defaultAction];
+//
+//            [self presentViewController:alert animated:YES completion:nil];
+//        }
+//
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//    }];
+//}
 
 
 #pragma mark - GET methods
 
 - (void)refreshStorageList
 {
-    if ([self.storageButton.title isEqualToString:@"Local"]) {
-        
-        [self getDataFromCloudStorageMode:self.segment.selectedSegmentIndex];
-    }
-    else {
+//    if ([self.storageButton.title isEqualToString:@"Local"]) {
+//
+//        [self getDataFromCloudStorageMode:self.segment.selectedSegmentIndex];
+//    }
+//    else {
         
         [self getDataFromLocalStorageMode:self.segment.selectedSegmentIndex];
-    }
+    //}
 }
 
 
@@ -573,73 +584,73 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
 }
 
 
-- (void)getDataFromCloudStorageMode:(NSInteger)mode
-{
-    __weak typeof(self) weakSelf = self;
-
-    __block NSMutableArray *newStorageList;
-
-     newStorageList = [[NSMutableArray alloc] init];
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: YES];
-    
-    
-    //
-    //List Cloud Storage Data
-    //
-    [MASCloudStorage findObjectsUsingMode:mode completion:^(NSArray *objects, NSError *error) {
-        
-        if (!error) {
-            
-            if ([objects count] > 0) {
-                
-                newStorageList = [[NSMutableArray alloc] initWithArray:objects];
-                
-                [weakSelf.messageLabel setHidden:YES];
-            }
-            else {
-                
-                newStorageList = [[NSMutableArray alloc] init];
-            }
-            
-            
-            // End the refreshing
-            if (weakSelf.refreshControl) {
-                
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"MMM d, h:mm a"];
-                NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
-                NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
-                                                                            forKey:NSForegroundColorAttributeName];
-                NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-                weakSelf.refreshControl.attributedTitle = attributedTitle;
-            }
-        }
-        else {
-            
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
-                                                                           message:[error localizedDescription]
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                                    style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action) {}];
-            
-            [alert addAction:defaultAction];
-            
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-
-        [weakSelf.refreshControl endRefreshing];
-        
-        [weakSelf setStorageItems:newStorageList];
-
-        [weakSelf.tableView reloadData];
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
-        
-    }];
-}
+//- (void)getDataFromCloudStorageMode:(NSInteger)mode
+//{
+//    __weak typeof(self) weakSelf = self;
+//
+//    __block NSMutableArray *newStorageList;
+//
+//     newStorageList = [[NSMutableArray alloc] init];
+//
+//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: YES];
+//
+//
+//    //
+//    //List Cloud Storage Data
+//    //
+//    [MASCloudStorage findObjectsUsingMode:mode completion:^(NSArray *objects, NSError *error) {
+//
+//        if (!error) {
+//
+//            if ([objects count] > 0) {
+//
+//                newStorageList = [[NSMutableArray alloc] initWithArray:objects];
+//
+//                [weakSelf.messageLabel setHidden:YES];
+//            }
+//            else {
+//
+//                newStorageList = [[NSMutableArray alloc] init];
+//            }
+//
+//
+//            // End the refreshing
+//            if (weakSelf.refreshControl) {
+//
+//                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//                [formatter setDateFormat:@"MMM d, h:mm a"];
+//                NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+//                NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+//                                                                            forKey:NSForegroundColorAttributeName];
+//                NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+//                weakSelf.refreshControl.attributedTitle = attributedTitle;
+//            }
+//        }
+//        else {
+//
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Failure"
+//                                                                           message:[error localizedDescription]
+//                                                                    preferredStyle:UIAlertControllerStyleAlert];
+//
+//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK"
+//                                                                    style:UIAlertActionStyleDefault
+//                                                                  handler:^(UIAlertAction * action) {}];
+//
+//            [alert addAction:defaultAction];
+//
+//            [self presentViewController:alert animated:YES completion:nil];
+//        }
+//
+//        [weakSelf.refreshControl endRefreshing];
+//
+//        [weakSelf setStorageItems:newStorageList];
+//
+//        [weakSelf.tableView reloadData];
+//
+//        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
+//
+//    }];
+//}
 
 
 #pragma mark - UIActionSheet delegate
@@ -658,18 +669,18 @@ static const NSInteger ADD_INVALID_DATA_SHEET = 4;
     }
 }
 
-- (void)listCloudObjects
-{
-    [MASCloudStorage findObjectsUsingMode:MASCloudStorageSegmentApplication completion:^(NSArray *objects, NSError *error) {
-      [MASCloudStorage findObjectUsingKey:@"key" mode:MASCloudStorageSegmentApplication completion:^(MASObject *object, NSError *error) {
-          
-      }];
-    }];
-    
-    [MASLocalStorage findObjectsUsingMode:MASLocalStorageSegmentApplication completion:^(NSArray *objects, NSError *error) {
-        
-    }];
-}
+//- (void)listCloudObjects
+//{
+//    [MASCloudStorage findObjectsUsingMode:MASCloudStorageSegmentApplication completion:^(NSArray *objects, NSError *error) {
+//      [MASCloudStorage findObjectUsingKey:@"key" mode:MASCloudStorageSegmentApplication completion:^(MASObject *object, NSError *error) {
+//
+//      }];
+//    }];
+//
+//    [MASLocalStorage findObjectsUsingMode:MASLocalStorageSegmentApplication completion:^(NSArray *objects, NSError *error) {
+//
+//    }];
+//}
 
 - (void)saveObjectToCloud
 {
