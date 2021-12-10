@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '9.0'
+platform :ios, '12.0'
 target 'StorageApp' do
     # use_frameworks!
     pod 'MASFoundation', '~> 2.1.00'
