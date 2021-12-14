@@ -14,7 +14,7 @@
 #import <MASStorage/MASStorage.h>
 
 static NSString *SampleUser = @"admin";
-static NSString *SampleUserPassword = @"autotest";
+static NSString *SampleUserPassword = @"7layer";
 
 //Action Sheet
 static const NSInteger ADD_SHEET = 10;
