@@ -30,7 +30,7 @@
 - (void) testInitialScreen {
     // UI tests must launch the application that they test.
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:@"AshwinHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+    [self addUIInterruptionMonitorWithDescription:@"TestInitialScreenHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
         NSString * allowBtnText = @"Allow While Using App";
         XCUIElementQuery * buttons = interruptingElement.buttons;
         if ([buttons[allowBtnText] exists]) {
@@ -55,13 +55,23 @@
 - (void) verifyCreationAndUpdateOfObject:(BOOL)isAppUserSegment isStringObject:(BOOL)isStringObject {
     // UI tests must launch the application that they test.
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:@"AshwinHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+    [self addUIInterruptionMonitorWithDescription:@"VerifyCreationAndUpdateOfObjectHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+        
+        // handling permissions popup
         NSString * allowBtnText = @"Allow While Using App";
         XCUIElementQuery * buttons = interruptingElement.buttons;
         if ([buttons[allowBtnText] exists]) {
             [buttons[allowBtnText] tap];
             return YES;
         }
+        
+        if ([app.staticTexts[@"LocalStorageItem updated Successfully"] exists]) {
+            XCUIElement *okButton = interruptingElement.buttons[@"OK"];
+            [okButton tap];
+            return YES;
+        }
+        
+        // handling failure alert
         if ([app.alerts[@"Failure"] exists]) {
             [app.alerts[@"Failure"].scrollViews.otherElements.buttons[@"OK"] tap];
             XCTAssert(NO);
@@ -137,6 +147,7 @@
     [self verifyCreationAndUpdateOfObject:YES isStringObject:NO];
 }
 
+/*
 - (void)testLaunchPerformance {
     if (@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *)) {
         // This measures how long it takes to launch your application.
@@ -144,6 +155,6 @@
             [[[XCUIApplication alloc] init] launch];
         }];
     }
-}
+} */
 
 @end
