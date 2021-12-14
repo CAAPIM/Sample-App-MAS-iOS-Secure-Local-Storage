@@ -19,13 +19,13 @@
 		10D2D4FC1C19F64700DF8AC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10D2D4FA1C19F64700DF8AC4 /* LaunchScreen.storyboard */; };
 		10EB47851D17754C0048B127 /* oversize.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10EB47841D17754C0048B127 /* oversize.jpg */; };
 		481164DE1FEB1174002EFD4D /* msso_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 481164DD1FEB1174002EFD4D /* msso_config.json */; };
-		598B91842763600C005377EF /* StorageAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 598B91832763600C005377EF /* StorageAppUITests.m */; };
-		598B91862763600C005377EF /* StorageAppUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 598B91852763600C005377EF /* StorageAppUITestsLaunchTests.m */; };
+		59FA07CE27674FBB0017FE96 /* StorageAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FA07CD27674FBB0017FE96 /* StorageAppUITests.m */; };
+		59FA07D027674FBB0017FE96 /* StorageAppUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FA07CF27674FBB0017FE96 /* StorageAppUITestsLaunchTests.m */; };
 		85FE3B7F52E8E380CFB7A2AA /* libPods-StorageApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A008713EC56604A4054721FF /* libPods-StorageApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		598B91872763600C005377EF /* PBXContainerItemProxy */ = {
+		59FA07D127674FBB0017FE96 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 10D2D4E11C19F64700DF8AC4 /* Project object */;
 			proxyType = 1;
@@ -67,9 +67,9 @@
 		10D2D4FD1C19F64800DF8AC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10EB47841D17754C0048B127 /* oversize.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oversize.jpg; sourceTree = "<group>"; };
 		481164DD1FEB1174002EFD4D /* msso_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = msso_config.json; sourceTree = "<group>"; };
-		598B91812763600C005377EF /* StorageAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		598B91832763600C005377EF /* StorageAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITests.m; sourceTree = "<group>"; };
-		598B91852763600C005377EF /* StorageAppUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITestsLaunchTests.m; sourceTree = "<group>"; };
+		59FA07CB27674FBB0017FE96 /* StorageAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59FA07CD27674FBB0017FE96 /* StorageAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITests.m; sourceTree = "<group>"; };
+		59FA07CF27674FBB0017FE96 /* StorageAppUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITestsLaunchTests.m; sourceTree = "<group>"; };
 		A008713EC56604A4054721FF /* libPods-StorageApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StorageApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E0E8A137AD13F15B65CF38 /* Pods-StorageApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StorageApp/Pods-StorageApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +84,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		598B917E2763600C005377EF /* Frameworks */ = {
+		59FA07C827674FBB0017FE96 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -121,7 +121,7 @@
 				481164DD1FEB1174002EFD4D /* msso_config.json */,
 				1009A5FF1D6A12A700A8444C /* libsqlite3.tbd */,
 				10D2D4EB1C19F64700DF8AC4 /* StorageApp */,
-				598B91822763600C005377EF /* StorageAppUITests */,
+				59FA07CC27674FBB0017FE96 /* StorageAppUITests */,
 				10D2D4EA1C19F64700DF8AC4 /* Products */,
 				2AA0AC49BAA8714B9DEFDA35 /* Pods */,
 				42B15734922D09B1AF94D088 /* Frameworks */,
@@ -132,7 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				10D2D4E91C19F64700DF8AC4 /* StorageApp.app */,
-				598B91812763600C005377EF /* StorageAppUITests.xctest */,
+				59FA07CB27674FBB0017FE96 /* StorageAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,11 +179,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		598B91822763600C005377EF /* StorageAppUITests */ = {
+		59FA07CC27674FBB0017FE96 /* StorageAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				598B91832763600C005377EF /* StorageAppUITests.m */,
-				598B91852763600C005377EF /* StorageAppUITestsLaunchTests.m */,
+				59FA07CD27674FBB0017FE96 /* StorageAppUITests.m */,
+				59FA07CF27674FBB0017FE96 /* StorageAppUITestsLaunchTests.m */,
 			);
 			path = StorageAppUITests;
 			sourceTree = "<group>";
@@ -211,22 +211,22 @@
 			productReference = 10D2D4E91C19F64700DF8AC4 /* StorageApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		598B91802763600C005377EF /* StorageAppUITests */ = {
+		59FA07CA27674FBB0017FE96 /* StorageAppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 598B918B2763600C005377EF /* Build configuration list for PBXNativeTarget "StorageAppUITests" */;
+			buildConfigurationList = 59FA07D527674FBB0017FE96 /* Build configuration list for PBXNativeTarget "StorageAppUITests" */;
 			buildPhases = (
-				598B917D2763600C005377EF /* Sources */,
-				598B917E2763600C005377EF /* Frameworks */,
-				598B917F2763600C005377EF /* Resources */,
+				59FA07C727674FBB0017FE96 /* Sources */,
+				59FA07C827674FBB0017FE96 /* Frameworks */,
+				59FA07C927674FBB0017FE96 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				598B91882763600C005377EF /* PBXTargetDependency */,
+				59FA07D227674FBB0017FE96 /* PBXTargetDependency */,
 			);
 			name = StorageAppUITests;
 			productName = StorageAppUITests;
-			productReference = 598B91812763600C005377EF /* StorageAppUITests.xctest */;
+			productReference = 59FA07CB27674FBB0017FE96 /* StorageAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -246,7 +246,7 @@
 							};
 						};
 					};
-					598B91802763600C005377EF = {
+					59FA07CA27674FBB0017FE96 = {
 						CreatedOnToolsVersion = 13.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 10D2D4E81C19F64700DF8AC4;
@@ -268,7 +268,7 @@
 			projectRoot = "";
 			targets = (
 				10D2D4E81C19F64700DF8AC4 /* StorageApp */,
-				598B91802763600C005377EF /* StorageAppUITests */,
+				59FA07CA27674FBB0017FE96 /* StorageAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -288,7 +288,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		598B917F2763600C005377EF /* Resources */ = {
+		59FA07C927674FBB0017FE96 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -354,22 +354,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		598B917D2763600C005377EF /* Sources */ = {
+		59FA07C727674FBB0017FE96 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				598B91862763600C005377EF /* StorageAppUITestsLaunchTests.m in Sources */,
-				598B91842763600C005377EF /* StorageAppUITests.m in Sources */,
+				59FA07D027674FBB0017FE96 /* StorageAppUITestsLaunchTests.m in Sources */,
+				59FA07CE27674FBB0017FE96 /* StorageAppUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		598B91882763600C005377EF /* PBXTargetDependency */ = {
+		59FA07D227674FBB0017FE96 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 10D2D4E81C19F64700DF8AC4 /* StorageApp */;
-			targetProxy = 598B91872763600C005377EF /* PBXContainerItemProxy */;
+			targetProxy = 59FA07D127674FBB0017FE96 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -521,7 +521,7 @@
 			};
 			name = Release;
 		};
-		598B91892763600C005377EF /* Debug */ = {
+		59FA07D327674FBB0017FE96 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
@@ -558,7 +558,7 @@
 			};
 			name = Debug;
 		};
-		598B918A2763600C005377EF /* Release */ = {
+		59FA07D427674FBB0017FE96 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
@@ -615,11 +615,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		598B918B2763600C005377EF /* Build configuration list for PBXNativeTarget "StorageAppUITests" */ = {
+		59FA07D527674FBB0017FE96 /* Build configuration list for PBXNativeTarget "StorageAppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				598B91892763600C005377EF /* Debug */,
-				598B918A2763600C005377EF /* Release */,
+				59FA07D327674FBB0017FE96 /* Debug */,
+				59FA07D427674FBB0017FE96 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
