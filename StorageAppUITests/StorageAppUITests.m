@@ -27,21 +27,43 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void) testInitialScreen {
-    // UI tests must launch the application that they test.
+- (XCUIApplication*) initializeApp {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     [self addUIInterruptionMonitorWithDescription:@"TestInitialScreenHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+        
+        // handling permissions popup
         NSString * allowBtnText = @"Allow While Using App";
         XCUIElementQuery * buttons = interruptingElement.buttons;
         if ([buttons[allowBtnText] exists]) {
             [buttons[allowBtnText] tap];
             return YES;
         }
+        
+        // handling storage item update alert
+        if ([app.staticTexts[@"LocalStorageItem updated Successfully"] exists]) {
+            XCUIElement *okButton = interruptingElement.buttons[@"OK"];
+            [okButton tap];
+            return YES;
+        }
+        
+        // handling failure alert
+        if ([app.alerts[@"Failure"] exists]) {
+            [app.alerts[@"Failure"].scrollViews.otherElements.buttons[@"OK"] tap];
+            XCTAssert(NO);
+            return YES;
+        }
+
         XCTAssert(NO);
         return NO;
     }];
     [app launch];
     [app swipeUp];
+    return app;
+}
+
+- (void) testInitialScreen {
+    // UI tests must launch the application that they test.
+    XCUIApplication *app = [self initializeApp];
     XCUIElementQuery * navBars = [app navigationBars];
     XCTAssert([navBars[@"Local Storage"] exists]);
     
@@ -69,33 +91,7 @@
 
 - (void) verifyCreationAndUpdateOfObject:(BOOL)isAppUserSegment isStringObject:(BOOL)isStringObject {
     // UI tests must launch the application that they test.
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:@"VerifyCreationAndUpdateOfObjectHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
-        
-        // handling permissions popup
-        NSString * allowBtnText = @"Allow While Using App";
-        XCUIElementQuery * buttons = interruptingElement.buttons;
-        if ([buttons[allowBtnText] exists]) {
-            [buttons[allowBtnText] tap];
-            return YES;
-        }
-        
-        if ([app.staticTexts[@"LocalStorageItem updated Successfully"] exists]) {
-            XCUIElement *okButton = interruptingElement.buttons[@"OK"];
-            [okButton tap];
-            return YES;
-        }
-        
-        // handling failure alert
-        if ([app.alerts[@"Failure"] exists]) {
-            [app.alerts[@"Failure"].scrollViews.otherElements.buttons[@"OK"] tap];
-            XCTAssert(NO);
-            return YES;
-        }
-        return NO;
-    }];
-    [app launch];
-    [app swipeUp];
+    XCUIApplication *app = [self initializeApp];
     
     if (isAppUserSegment) {
         [app.tables.buttons[@"AppUser Seg."] tap];
@@ -106,7 +102,7 @@
     
     // check whether a new object is added
     NSUInteger numOfRows = [app.tables.cells count];
-    NSString *newObjectRowText = [NSString stringWithFormat:@"NewLocalStorage%lu", (unsigned long)(numOfRows+1)];
+    NSString *newObjectRowText = [NSString stringWithFormat:@"NewLocalStorage%lu", (unsigned long)(numOfRows)];
     BOOL result = [app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
     
@@ -153,19 +149,7 @@
 
 - (void) testDeleteAppSegmentObject {
     // UI tests must launch the application that they test.
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:@"TestDeleteAppSegmentObjectHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
-        NSString * allowBtnText = @"Allow While Using App";
-        XCUIElementQuery * buttons = interruptingElement.buttons;
-        if ([buttons[allowBtnText] exists]) {
-            [buttons[allowBtnText] tap];
-            return YES;
-        }
-        XCTAssert(NO);
-        return NO;
-    }];
-    [app launch];
-    [app swipeUp];
+    XCUIApplication *app = [self initializeApp];
     NSUInteger numOfRows = [app.tables.cells count];
     [self addObjectForApp:app isStringObject:YES];
     NSString *newObjectRowText = [NSString stringWithFormat:@"NewLocalStorage%lu", (unsigned long)(numOfRows + 1)];
@@ -179,19 +163,7 @@
 
 - (void) testDeleteAppUserSegmentObject {
     // UI tests must launch the application that they test.
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:@"TestDeleteAppUserSegmentObjectHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
-        NSString * allowBtnText = @"Allow While Using App";
-        XCUIElementQuery * buttons = interruptingElement.buttons;
-        if ([buttons[allowBtnText] exists]) {
-            [buttons[allowBtnText] tap];
-            return YES;
-        }
-        XCTAssert(NO);
-        return NO;
-    }];
-    [app launch];
-    [app swipeUp];
+    XCUIApplication *app = [self initializeApp];
     [app.tables.buttons[@"AppUser Seg."] tap];
     NSUInteger numOfRows = [app.tables.cells count];
     [self addObjectForApp:app isStringObject:YES];
