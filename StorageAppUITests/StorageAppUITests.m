@@ -8,7 +8,25 @@
 
 #import <XCTest/XCTest.h>
 
+#define INTERRUPT_MONITOR_DESCRIPTION @"TestInitialScreenHandler"
+#define PERMISSIONS_ALLOW_BUTTON @"Allow While Using App"
+#define LOCAL_STORAGE_UPDATE_SUCCESS_TEXT @"LocalStorageItem updated Successfully"
+#define LABEL_OK @"OK"
+#define LABEL_FAILURE @"Failure"
+#define LABEL_LOCAL_STORAGE @"Local Storage"
+#define LABEL_APP_USER_SEGMENT @"AppUser Seg."
+#define LABEL_APP_SEGMENT @"App Segment"
+#define LABEL_SHARE @"Share"
+#define LABEL_ADD_STRING_OBJECT @"Add data of type String"
+#define LABEL_ADD_IMAGE_OBJECT @"Add data of type Image"
+#define LABEL_UPDATE @"Update"
+#define LABEL_DELETE @"Delete"
+#define LABEL_UPDATED_OBJECT @"Testing Update"
+#define LABEL_NEW_OBJECT_FORMAT_STRING @"NewLocalStorage%lu"
+
 @interface StorageAppUITests : XCTestCase
+
+@property(nonatomic,strong) XCUIApplication *app;
 
 @end
 
@@ -19,6 +37,7 @@
 
     // In UI tests it is usually best to stop immediately when a failure occurs.
     self.continueAfterFailure = NO;
+    _app = [self initializeApp];
 
     // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
 }
@@ -29,10 +48,10 @@
 
 - (XCUIApplication*) initializeApp {
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:@"TestInitialScreenHandler" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+    [self addUIInterruptionMonitorWithDescription:INTERRUPT_MONITOR_DESCRIPTION handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
         
         // handling permissions popup
-        NSString * allowBtnText = @"Allow While Using App";
+        NSString * allowBtnText = PERMISSIONS_ALLOW_BUTTON;
         XCUIElementQuery * buttons = interruptingElement.buttons;
         if ([buttons[allowBtnText] exists]) {
             [buttons[allowBtnText] tap];
@@ -40,15 +59,15 @@
         }
         
         // handling storage item update alert
-        if ([app.staticTexts[@"LocalStorageItem updated Successfully"] exists]) {
-            XCUIElement *okButton = interruptingElement.buttons[@"OK"];
+        if ([app.staticTexts[LOCAL_STORAGE_UPDATE_SUCCESS_TEXT] exists]) {
+            XCUIElement *okButton = interruptingElement.buttons[LABEL_OK];
             [okButton tap];
             return YES;
         }
         
         // handling failure alert
-        if ([app.alerts[@"Failure"] exists]) {
-            [app.alerts[@"Failure"].scrollViews.otherElements.buttons[@"OK"] tap];
+        if ([app.alerts[LABEL_FAILURE] exists]) {
+            [app.alerts[LABEL_FAILURE].scrollViews.otherElements.buttons[LABEL_OK] tap];
             XCTAssert(NO);
             return YES;
         }
@@ -62,73 +81,70 @@
 }
 
 - (void) testInitialScreen {
-    // UI tests must launch the application that they test.
-    XCUIApplication *app = [self initializeApp];
-    XCUIElementQuery * navBars = [app navigationBars];
-    XCTAssert([navBars[@"Local Storage"] exists]);
+    XCUIElementQuery * navBars = [_app navigationBars];
+    XCTAssert([navBars[LABEL_LOCAL_STORAGE] exists]);
     
-    XCUIElement * appUserSegmentBtn = app.tables.buttons[@"AppUser Seg."];
+    XCUIElement * appUserSegmentBtn = _app.tables.buttons[LABEL_APP_USER_SEGMENT];
     XCTAssert([appUserSegmentBtn exists]);
     
-    XCUIElement * appSegmentBtn = app.tables.buttons[@"App Segment"];
+    XCUIElement * appSegmentBtn = _app.tables.buttons[LABEL_APP_SEGMENT];
     XCTAssert([appSegmentBtn exists]);
 }
 
 - (void) addObjectForApp:(XCUIApplication*)app isStringObject:(BOOL) isStringObject {
     
-    NSString * shareBtnText = @"Share";
-    NSString * navigationBarText = @"Local Storage";
-    
-    [app.navigationBars[navigationBarText].buttons[shareBtnText] tap];
+    [app.navigationBars[LABEL_LOCAL_STORAGE].buttons[LABEL_SHARE] tap];
     if (isStringObject) {
-        NSString * addStringObjText = @"Add data of type String";
+        NSString * addStringObjText = LABEL_ADD_STRING_OBJECT;
+        BOOL result = [app.sheets.scrollViews.otherElements.buttons[addStringObjText] waitForExistenceWithTimeout:3];
+        XCTAssert(result);
         [app.sheets.scrollViews.otherElements.buttons[addStringObjText] tap];
     } else {
-        NSString * addImageObjText = @"Add data of type Image";
+        NSString * addImageObjText = LABEL_ADD_IMAGE_OBJECT;
+        BOOL result = [app.sheets.scrollViews.otherElements.buttons[addImageObjText] waitForExistenceWithTimeout:3];
+        XCTAssert(result);
         [app.sheets.scrollViews.otherElements.buttons[addImageObjText] tap];
     }
 }
 
 - (void) verifyCreationAndUpdateOfObject:(BOOL)isAppUserSegment isStringObject:(BOOL)isStringObject {
-    // UI tests must launch the application that they test.
-    XCUIApplication *app = [self initializeApp];
     
     if (isAppUserSegment) {
-        [app.tables.buttons[@"AppUser Seg."] tap];
+        [_app.tables.buttons[LABEL_APP_USER_SEGMENT] tap];
     }
     
     // add object
-    [self addObjectForApp:app isStringObject:isStringObject];
+    [self addObjectForApp:_app isStringObject:isStringObject];
     
     // check whether a new object is added
-    NSUInteger numOfRows = [app.tables.cells count];
-    NSString *newObjectRowText = [NSString stringWithFormat:@"NewLocalStorage%lu", (unsigned long)(numOfRows)];
-    BOOL result = [app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
+    NSUInteger numOfRows = [_app.tables.cells count];
+    NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows)];
+    BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
     
     // open newly created object
-    [app.tables.staticTexts[newObjectRowText] tap];
+    [_app.tables.staticTexts[newObjectRowText] tap];
     
     // verify the label
-    XCUIElementQuery * navBars = [app navigationBars];
+    XCUIElementQuery * navBars = [_app navigationBars];
     XCTAssert([navBars[newObjectRowText] exists]);
     
     // update the object
-    XCUIElement * itemNavigationBar = app.navigationBars[newObjectRowText];
-    [itemNavigationBar.buttons[@"Update"] tap];
+    XCUIElement * itemNavigationBar = _app.navigationBars[newObjectRowText];
+    [itemNavigationBar.buttons[LABEL_UPDATE] tap];
     
     // tap back button
-    [itemNavigationBar.buttons[@"Local Storage"] tap];
+    [itemNavigationBar.buttons[LABEL_LOCAL_STORAGE] tap];
     
     // tap the newly created object
-    [app.tables.staticTexts[newObjectRowText] tap];
+    [_app.tables.staticTexts[newObjectRowText] tap];
     
     // confirm the text
-    NSString* updatingText = @"Testing Update";
-    XCTAssert([app.staticTexts[updatingText] exists]);
+    NSString* updatingText = LABEL_UPDATED_OBJECT;
+    XCTAssert([_app.staticTexts[updatingText] exists]);
     
     // tap back button
-    [itemNavigationBar.buttons[@"Local Storage"] tap];
+    [itemNavigationBar.buttons[LABEL_LOCAL_STORAGE] tap];
 }
 
 - (void) testAppSegmentWithStringTypeObject {
@@ -148,31 +164,27 @@
 }
 
 - (void) testDeleteAppSegmentObject {
-    // UI tests must launch the application that they test.
-    XCUIApplication *app = [self initializeApp];
-    NSUInteger numOfRows = [app.tables.cells count];
-    [self addObjectForApp:app isStringObject:YES];
-    NSString *newObjectRowText = [NSString stringWithFormat:@"NewLocalStorage%lu", (unsigned long)(numOfRows + 1)];
-    BOOL result = [app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
+    NSUInteger numOfRows = [_app.tables.cells count];
+    [self addObjectForApp:_app isStringObject:YES];
+    NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows + 1)];
+    BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
-    [app.tables.staticTexts[newObjectRowText] swipeLeft];
-    [[[XCUIApplication alloc] init].tables/*@START_MENU_TOKEN@*/.buttons[@"Delete"]/*[[".cells.buttons[@\"Delete\"]",".buttons[@\"Delete\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    NSUInteger currentNumberOfRows = [app.tables.cells count];
+    [_app.tables.staticTexts[newObjectRowText] swipeLeft];
+    [[[XCUIApplication alloc] init].tables.buttons[LABEL_DELETE] tap];
+    NSUInteger currentNumberOfRows = [_app.tables.cells count];
     XCTAssert(numOfRows == currentNumberOfRows);
 }
 
 - (void) testDeleteAppUserSegmentObject {
-    // UI tests must launch the application that they test.
-    XCUIApplication *app = [self initializeApp];
-    [app.tables.buttons[@"AppUser Seg."] tap];
-    NSUInteger numOfRows = [app.tables.cells count];
-    [self addObjectForApp:app isStringObject:YES];
-    NSString *newObjectRowText = [NSString stringWithFormat:@"NewLocalStorage%lu", (unsigned long)(numOfRows + 1)];
-    BOOL result = [app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
+    [_app.tables.buttons[LABEL_APP_USER_SEGMENT] tap];
+    NSUInteger numOfRows = [_app.tables.cells count];
+    [self addObjectForApp:_app isStringObject:YES];
+    NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows + 1)];
+    BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
-    [app.tables.staticTexts[newObjectRowText] swipeLeft];
-    [[[XCUIApplication alloc] init].tables/*@START_MENU_TOKEN@*/.buttons[@"Delete"]/*[[".cells.buttons[@\"Delete\"]",".buttons[@\"Delete\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    NSUInteger currentNumberOfRows = [app.tables.cells count];
+    [_app.tables.staticTexts[newObjectRowText] swipeLeft];
+    [[[XCUIApplication alloc] init].tables.buttons[LABEL_DELETE] tap];
+    NSUInteger currentNumberOfRows = [_app.tables.cells count];
     XCTAssert(numOfRows == currentNumberOfRows);
 }
 
