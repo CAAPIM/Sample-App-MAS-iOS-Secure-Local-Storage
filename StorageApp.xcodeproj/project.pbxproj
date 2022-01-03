@@ -19,8 +19,20 @@
 		10D2D4FC1C19F64700DF8AC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10D2D4FA1C19F64700DF8AC4 /* LaunchScreen.storyboard */; };
 		10EB47851D17754C0048B127 /* oversize.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10EB47841D17754C0048B127 /* oversize.jpg */; };
 		481164DE1FEB1174002EFD4D /* msso_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 481164DD1FEB1174002EFD4D /* msso_config.json */; };
+		59F049E8278352DE007AD13D /* StorageAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F049E7278352DE007AD13D /* StorageAppUITests.m */; };
+		59F049EA278352DE007AD13D /* StorageAppUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F049E9278352DE007AD13D /* StorageAppUITestsLaunchTests.m */; };
 		85FE3B7F52E8E380CFB7A2AA /* libPods-StorageApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A008713EC56604A4054721FF /* libPods-StorageApp.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59F049EB278352DE007AD13D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10D2D4E11C19F64700DF8AC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10D2D4E81C19F64700DF8AC4;
+			remoteInfo = StorageApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		10D2D5291C19F71600DF8AC4 /* Embed Frameworks */ = {
@@ -55,6 +67,9 @@
 		10D2D4FD1C19F64800DF8AC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10EB47841D17754C0048B127 /* oversize.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oversize.jpg; sourceTree = "<group>"; };
 		481164DD1FEB1174002EFD4D /* msso_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = msso_config.json; sourceTree = "<group>"; };
+		59F049E5278352DE007AD13D /* StorageAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F049E7278352DE007AD13D /* StorageAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITests.m; sourceTree = "<group>"; };
+		59F049E9278352DE007AD13D /* StorageAppUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITestsLaunchTests.m; sourceTree = "<group>"; };
 		A008713EC56604A4054721FF /* libPods-StorageApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StorageApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E0E8A137AD13F15B65CF38 /* Pods-StorageApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StorageApp/Pods-StorageApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +81,13 @@
 			files = (
 				1009A6001D6A12A700A8444C /* libsqlite3.tbd in Frameworks */,
 				85FE3B7F52E8E380CFB7A2AA /* libPods-StorageApp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F049E2278352DE007AD13D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +121,7 @@
 				481164DD1FEB1174002EFD4D /* msso_config.json */,
 				1009A5FF1D6A12A700A8444C /* libsqlite3.tbd */,
 				10D2D4EB1C19F64700DF8AC4 /* StorageApp */,
+				59F049E6278352DE007AD13D /* StorageAppUITests */,
 				10D2D4EA1C19F64700DF8AC4 /* Products */,
 				2AA0AC49BAA8714B9DEFDA35 /* Pods */,
 				42B15734922D09B1AF94D088 /* Frameworks */,
@@ -109,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				10D2D4E91C19F64700DF8AC4 /* StorageApp.app */,
+				59F049E5278352DE007AD13D /* StorageAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +179,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		59F049E6278352DE007AD13D /* StorageAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				59F049E7278352DE007AD13D /* StorageAppUITests.m */,
+				59F049E9278352DE007AD13D /* StorageAppUITestsLaunchTests.m */,
+			);
+			path = StorageAppUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -178,6 +211,24 @@
 			productReference = 10D2D4E91C19F64700DF8AC4 /* StorageApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		59F049E4278352DE007AD13D /* StorageAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59F049EF278352DE007AD13D /* Build configuration list for PBXNativeTarget "StorageAppUITests" */;
+			buildPhases = (
+				59F049E1278352DE007AD13D /* Sources */,
+				59F049E2278352DE007AD13D /* Frameworks */,
+				59F049E3278352DE007AD13D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59F049EC278352DE007AD13D /* PBXTargetDependency */,
+			);
+			name = StorageAppUITests;
+			productName = StorageAppUITests;
+			productReference = 59F049E5278352DE007AD13D /* StorageAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -195,6 +246,12 @@
 							};
 						};
 					};
+					59F049E4278352DE007AD13D = {
+						CreatedOnToolsVersion = 13.2.1;
+						DevelopmentTeam = L3373528RD;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 10D2D4E81C19F64700DF8AC4;
+					};
 				};
 			};
 			buildConfigurationList = 10D2D4E41C19F64700DF8AC4 /* Build configuration list for PBXProject "StorageApp" */;
@@ -202,6 +259,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -211,6 +269,7 @@
 			projectRoot = "";
 			targets = (
 				10D2D4E81C19F64700DF8AC4 /* StorageApp */,
+				59F049E4278352DE007AD13D /* StorageAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -230,6 +289,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59F049E3278352DE007AD13D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -239,20 +305,22 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-StorageApp/Pods-StorageApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-StorageApp/Pods-StorageApp-frameworks.sh",
+				"${PODS_ROOT}/MAS-Proximity/MASProximity.framework",
 				"${PODS_ROOT}/MASFoundation/MASFoundation.framework",
 				"${PODS_ROOT}/MASStorage/MASStorage.framework",
 				"${PODS_ROOT}/MASUI/MASUI.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASProximity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASFoundation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASStorage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASUI.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StorageApp/Pods-StorageApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StorageApp/Pods-StorageApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C3CFD9E763AB230D26525F2B /* [CP] Check Pods Manifest.lock */ = {
@@ -287,7 +355,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59F049E1278352DE007AD13D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F049EA278352DE007AD13D /* StorageAppUITestsLaunchTests.m in Sources */,
+				59F049E8278352DE007AD13D /* StorageAppUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59F049EC278352DE007AD13D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10D2D4E81C19F64700DF8AC4 /* StorageApp */;
+			targetProxy = 59F049EB278352DE007AD13D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		10D2D4F51C19F64700DF8AC4 /* Main.storyboard */ = {
@@ -437,6 +522,79 @@
 			};
 			name = Release;
 		};
+		59F049ED278352DE007AD13D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L3373528RD;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AshwinSurabhi.StorageAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StorageApp;
+			};
+			name = Debug;
+		};
+		59F049EE278352DE007AD13D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L3373528RD;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AshwinSurabhi.StorageAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StorageApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -454,6 +612,15 @@
 			buildConfigurations = (
 				10D2D50C1C19F64800DF8AC4 /* Debug */,
 				10D2D50D1C19F64800DF8AC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59F049EF278352DE007AD13D /* Build configuration list for PBXNativeTarget "StorageAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F049ED278352DE007AD13D /* Debug */,
+				59F049EE278352DE007AD13D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
