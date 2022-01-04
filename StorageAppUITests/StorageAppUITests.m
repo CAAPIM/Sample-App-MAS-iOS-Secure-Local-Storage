@@ -33,39 +33,45 @@
 @implementation StorageAppUITests
 
 - (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-
+    //
     // In UI tests it is usually best to stop immediately when a failure occurs.
+    //
     self.continueAfterFailure = NO;
     _app = [self initializeApp];
-
-    // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
 }
 
 - (void)tearDown {
+    //
     // Put teardown code here. This method is called after the invocation of each test method in the class.
+    //
 }
 
 - (XCUIApplication*) initializeApp {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     [self addUIInterruptionMonitorWithDescription:INTERRUPT_MONITOR_DESCRIPTION handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
         
+        //
         // handling permissions popup
+        //
         NSString * allowBtnText = PERMISSIONS_ALLOW_BUTTON;
         XCUIElementQuery * buttons = interruptingElement.buttons;
         if ([buttons[allowBtnText] exists]) {
             [buttons[allowBtnText] tap];
             return YES;
         }
-        
+
+        //
         // handling storage item update alert
+        //
         if ([app.staticTexts[LOCAL_STORAGE_UPDATE_SUCCESS_TEXT] exists]) {
             XCUIElement *okButton = interruptingElement.buttons[LABEL_OK];
             [okButton tap];
             return YES;
         }
-        
+
+        //
         // handling failure alert
+        //
         if ([app.alerts[LABEL_FAILURE] exists]) {
             [app.alerts[LABEL_FAILURE].scrollViews.otherElements.buttons[LABEL_OK] tap];
             XCTAssert(NO);
@@ -112,38 +118,56 @@
     if (isAppUserSegment) {
         [_app.tables.buttons[LABEL_APP_USER_SEGMENT] tap];
     }
-    
+
+    //
     // add object
+    //
     [self addObjectForApp:_app isStringObject:isStringObject];
-    
+
+    //
     // check whether a new object is added
+    //
     NSUInteger numOfRows = [_app.tables.cells count];
     NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows)];
     BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
-    
+
+    //
     // open newly created object
+    //
     [_app.tables.staticTexts[newObjectRowText] tap];
     
+    //
     // verify the label
+    //
     XCUIElementQuery * navBars = [_app navigationBars];
     XCTAssert([navBars[newObjectRowText] exists]);
-    
+
+    //
     // update the object
+    //
     XCUIElement * itemNavigationBar = _app.navigationBars[newObjectRowText];
     [itemNavigationBar.buttons[LABEL_UPDATE] tap];
-    
+
+    //
     // tap back button
+    //
     [itemNavigationBar.buttons[LABEL_LOCAL_STORAGE] tap];
-    
+
+    //
     // tap the newly created object
+    //
     [_app.tables.staticTexts[newObjectRowText] tap];
-    
+
+    //
     // confirm the text
+    //
     NSString* updatingText = LABEL_UPDATED_OBJECT;
     XCTAssert([_app.staticTexts[updatingText] exists]);
-    
+
+    //
     // tap back button
+    //
     [itemNavigationBar.buttons[LABEL_LOCAL_STORAGE] tap];
 }
 
