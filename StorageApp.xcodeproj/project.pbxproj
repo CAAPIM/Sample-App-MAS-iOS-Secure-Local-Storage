@@ -19,6 +19,7 @@
 		10D2D4FC1C19F64700DF8AC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10D2D4FA1C19F64700DF8AC4 /* LaunchScreen.storyboard */; };
 		10EB47851D17754C0048B127 /* oversize.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10EB47841D17754C0048B127 /* oversize.jpg */; };
 		481164DE1FEB1174002EFD4D /* msso_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 481164DD1FEB1174002EFD4D /* msso_config.json */; };
+		59AD81D427856E8700B3E1ED /* ui_tests_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 59AD81D327856E8700B3E1ED /* ui_tests_config.json */; };
 		59F049E8278352DE007AD13D /* StorageAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F049E7278352DE007AD13D /* StorageAppUITests.m */; };
 		59F049EA278352DE007AD13D /* StorageAppUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F049E9278352DE007AD13D /* StorageAppUITestsLaunchTests.m */; };
 		85FE3B7F52E8E380CFB7A2AA /* libPods-StorageApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A008713EC56604A4054721FF /* libPods-StorageApp.a */; };
@@ -67,6 +68,7 @@
 		10D2D4FD1C19F64800DF8AC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10EB47841D17754C0048B127 /* oversize.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = oversize.jpg; sourceTree = "<group>"; };
 		481164DD1FEB1174002EFD4D /* msso_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = msso_config.json; sourceTree = "<group>"; };
+		59AD81D327856E8700B3E1ED /* ui_tests_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ui_tests_config.json; sourceTree = "<group>"; };
 		59F049E5278352DE007AD13D /* StorageAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F049E7278352DE007AD13D /* StorageAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITests.m; sourceTree = "<group>"; };
 		59F049E9278352DE007AD13D /* StorageAppUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorageAppUITestsLaunchTests.m; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		10D2D4E01C19F64700DF8AC4 = {
 			isa = PBXGroup;
 			children = (
+				59AD81D327856E8700B3E1ED /* ui_tests_config.json */,
 				481164DD1FEB1174002EFD4D /* msso_config.json */,
 				1009A5FF1D6A12A700A8444C /* libsqlite3.tbd */,
 				10D2D4EB1C19F64700DF8AC4 /* StorageApp */,
@@ -293,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59AD81D427856E8700B3E1ED /* ui_tests_config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,35 +8,44 @@
 
 #import <XCTest/XCTest.h>
 
-#define INTERRUPT_MONITOR_DESCRIPTION @"TestInitialScreenHandler"
-#define PERMISSIONS_ALLOW_BUTTON @"Allow While Using App"
-#define LOCAL_STORAGE_UPDATE_SUCCESS_TEXT @"LocalStorageItem updated Successfully"
-#define LABEL_OK @"OK"
-#define LABEL_FAILURE @"Failure"
-#define LABEL_LOCAL_STORAGE @"Local Storage"
-#define LABEL_APP_USER_SEGMENT @"AppUser Seg."
-#define LABEL_APP_SEGMENT @"App Segment"
-#define LABEL_SHARE @"Share"
-#define LABEL_ADD_STRING_OBJECT @"Add data of type String"
-#define LABEL_ADD_IMAGE_OBJECT @"Add data of type Image"
-#define LABEL_UPDATE @"Update"
-#define LABEL_DELETE @"Delete"
-#define LABEL_UPDATED_OBJECT @"Testing Update"
-#define LABEL_NEW_OBJECT_FORMAT_STRING @"NewLocalStorage%lu"
+#define KEY_INTERRUPT_MONITOR_DESCRIPTION @"interrupt.monitor.description"
+#define KEY_LABEL_PERMISSIONS_ALLOW_BUTTON @"label.permissions.allow.button"
+#define KEY_LOCAL_STORAGE_UPDATE_SUCCESS_TEXT @"text.localstorage.update.success"
+#define KEY_LABEL_OK @"label.ok"
+#define KEY_LABEL_FAILURE @"label.failure"
+#define KEY_LABEL_LOCAL_STORAGE @"label.localstorage"
+#define KEY_LABEL_APP_USER_SEGMENT @"label.appuser.segment"
+#define KEY_LABEL_APP_SEGMENT @"label.app.segment"
+#define KEY_LABEL_SHARE @"label.share"
+#define KEY_LABEL_ADD_STRING_OBJECT @"label.add.string.object"
+#define KEY_LABEL_ADD_IMAGE_OBJECT @"label.add.image.object"
+#define KEY_LABEL_UPDATE @"label.update"
+#define KEY_LABEL_DELETE @"label.delete"
+#define KEY_LABEL_UPDATED_OBJECT @"label.updated.object"
+#define KEY_LABEL_NEW_OBJECT_FORMAT_STRING @"label.new.object.format.string"
 
 @interface StorageAppUITests : XCTestCase
 
 @property(nonatomic,strong) XCUIApplication *app;
+@property(nonatomic,strong) NSDictionary *externalStringsDict;
 
 @end
 
 @implementation StorageAppUITests
+
+- (NSDictionary *)JSONFromFile
+{
+    NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ui_tests_config" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+}
 
 - (void)setUp {
     //
     // In UI tests it is usually best to stop immediately when a failure occurs.
     //
     self.continueAfterFailure = NO;
+    _externalStringsDict = [self JSONFromFile];
     _app = [self initializeApp];
 }
 
@@ -48,12 +57,15 @@
 
 - (XCUIApplication*) initializeApp {
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    [self addUIInterruptionMonitorWithDescription:INTERRUPT_MONITOR_DESCRIPTION handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+    NSString *labelOK = [_externalStringsDict objectForKey:KEY_LABEL_OK];
+    NSString *labelFailure = [_externalStringsDict objectForKey:KEY_LABEL_FAILURE];
+    NSString *allowBtnText = [_externalStringsDict objectForKey:KEY_LABEL_PERMISSIONS_ALLOW_BUTTON];
+    NSString *updateSuccessText = [_externalStringsDict objectForKey:KEY_LOCAL_STORAGE_UPDATE_SUCCESS_TEXT];
+    [self addUIInterruptionMonitorWithDescription:[_externalStringsDict objectForKey:KEY_INTERRUPT_MONITOR_DESCRIPTION] handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
         
         //
         // handling permissions popup
         //
-        NSString * allowBtnText = PERMISSIONS_ALLOW_BUTTON;
         XCUIElementQuery * buttons = interruptingElement.buttons;
         if ([buttons[allowBtnText] exists]) {
             [buttons[allowBtnText] tap];
@@ -63,8 +75,8 @@
         //
         // handling storage item update alert
         //
-        if ([app.staticTexts[LOCAL_STORAGE_UPDATE_SUCCESS_TEXT] exists]) {
-            XCUIElement *okButton = interruptingElement.buttons[LABEL_OK];
+        if ([app.staticTexts[updateSuccessText] exists]) {
+            XCUIElement *okButton = interruptingElement.buttons[labelOK];
             [okButton tap];
             return YES;
         }
@@ -72,8 +84,8 @@
         //
         // handling failure alert
         //
-        if ([app.alerts[LABEL_FAILURE] exists]) {
-            [app.alerts[LABEL_FAILURE].scrollViews.otherElements.buttons[LABEL_OK] tap];
+        if ([app.alerts[labelFailure] exists]) {
+            [app.alerts[labelFailure].scrollViews.otherElements.buttons[labelOK] tap];
             XCTAssert(NO);
             return YES;
         }
@@ -88,25 +100,25 @@
 
 - (void) testInitialScreen {
     XCUIElementQuery * navBars = [_app navigationBars];
-    XCTAssert([navBars[LABEL_LOCAL_STORAGE] exists]);
+    XCTAssert([navBars[[_externalStringsDict objectForKey:KEY_LABEL_LOCAL_STORAGE]] exists]);
     
-    XCUIElement * appUserSegmentBtn = _app.tables.buttons[LABEL_APP_USER_SEGMENT];
+    XCUIElement * appUserSegmentBtn = _app.tables.buttons[[_externalStringsDict objectForKey:KEY_LABEL_APP_USER_SEGMENT]];
     XCTAssert([appUserSegmentBtn exists]);
     
-    XCUIElement * appSegmentBtn = _app.tables.buttons[LABEL_APP_SEGMENT];
+    XCUIElement * appSegmentBtn = _app.tables.buttons[[_externalStringsDict objectForKey:KEY_LABEL_APP_SEGMENT]];
     XCTAssert([appSegmentBtn exists]);
 }
 
 - (void) addObjectForApp:(XCUIApplication*)app isStringObject:(BOOL) isStringObject {
     
-    [app.navigationBars[LABEL_LOCAL_STORAGE].buttons[LABEL_SHARE] tap];
+    [app.navigationBars[[_externalStringsDict objectForKey:KEY_LABEL_LOCAL_STORAGE]].buttons[[_externalStringsDict objectForKey:KEY_LABEL_SHARE]] tap];
     if (isStringObject) {
-        NSString * addStringObjText = LABEL_ADD_STRING_OBJECT;
+        NSString * addStringObjText = [_externalStringsDict objectForKey:KEY_LABEL_ADD_STRING_OBJECT];
         BOOL result = [app.sheets.scrollViews.otherElements.buttons[addStringObjText] waitForExistenceWithTimeout:3];
         XCTAssert(result);
         [app.sheets.scrollViews.otherElements.buttons[addStringObjText] tap];
     } else {
-        NSString * addImageObjText = LABEL_ADD_IMAGE_OBJECT;
+        NSString * addImageObjText = [_externalStringsDict objectForKey:KEY_LABEL_ADD_IMAGE_OBJECT];
         BOOL result = [app.sheets.scrollViews.otherElements.buttons[addImageObjText] waitForExistenceWithTimeout:3];
         XCTAssert(result);
         [app.sheets.scrollViews.otherElements.buttons[addImageObjText] tap];
@@ -116,7 +128,7 @@
 - (void) verifyCreationAndUpdateOfObject:(BOOL)isAppUserSegment isStringObject:(BOOL)isStringObject {
     
     if (isAppUserSegment) {
-        [_app.tables.buttons[LABEL_APP_USER_SEGMENT] tap];
+        [_app.tables.buttons[[_externalStringsDict objectForKey:KEY_LABEL_APP_USER_SEGMENT]] tap];
     }
 
     //
@@ -128,7 +140,7 @@
     // check whether a new object is added
     //
     NSUInteger numOfRows = [_app.tables.cells count];
-    NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows)];
+    NSString *newObjectRowText = [NSString stringWithFormat:[_externalStringsDict objectForKey:KEY_LABEL_NEW_OBJECT_FORMAT_STRING], (unsigned long)(numOfRows)];
     BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
 
@@ -147,12 +159,12 @@
     // update the object
     //
     XCUIElement * itemNavigationBar = _app.navigationBars[newObjectRowText];
-    [itemNavigationBar.buttons[LABEL_UPDATE] tap];
+    [itemNavigationBar.buttons[[_externalStringsDict objectForKey:KEY_LABEL_UPDATE]] tap];
 
     //
     // tap back button
     //
-    [itemNavigationBar.buttons[LABEL_LOCAL_STORAGE] tap];
+    [itemNavigationBar.buttons[[_externalStringsDict objectForKey:KEY_LABEL_LOCAL_STORAGE]] tap];
 
     //
     // tap the newly created object
@@ -162,13 +174,13 @@
     //
     // confirm the text
     //
-    NSString* updatingText = LABEL_UPDATED_OBJECT;
+    NSString* updatingText = [_externalStringsDict objectForKey:KEY_LABEL_UPDATED_OBJECT];
     XCTAssert([_app.staticTexts[updatingText] exists]);
 
     //
     // tap back button
     //
-    [itemNavigationBar.buttons[LABEL_LOCAL_STORAGE] tap];
+    [itemNavigationBar.buttons[[_externalStringsDict objectForKey:KEY_LABEL_LOCAL_STORAGE]] tap];
 }
 
 - (void) testAppSegmentWithStringTypeObject {
@@ -190,24 +202,24 @@
 - (void) testDeleteAppSegmentObject {
     NSUInteger numOfRows = [_app.tables.cells count];
     [self addObjectForApp:_app isStringObject:YES];
-    NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows + 1)];
+    NSString *newObjectRowText = [NSString stringWithFormat:[_externalStringsDict objectForKey:KEY_LABEL_NEW_OBJECT_FORMAT_STRING], (unsigned long)(numOfRows + 1)];
     BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
     [_app.tables.staticTexts[newObjectRowText] swipeLeft];
-    [[[XCUIApplication alloc] init].tables.buttons[LABEL_DELETE] tap];
+    [[[XCUIApplication alloc] init].tables.buttons[[_externalStringsDict objectForKey:KEY_LABEL_DELETE]] tap];
     NSUInteger currentNumberOfRows = [_app.tables.cells count];
     XCTAssert(numOfRows == currentNumberOfRows);
 }
 
 - (void) testDeleteAppUserSegmentObject {
-    [_app.tables.buttons[LABEL_APP_USER_SEGMENT] tap];
+    [_app.tables.buttons[[_externalStringsDict objectForKey:KEY_LABEL_APP_USER_SEGMENT]] tap];
     NSUInteger numOfRows = [_app.tables.cells count];
     [self addObjectForApp:_app isStringObject:YES];
-    NSString *newObjectRowText = [NSString stringWithFormat:LABEL_NEW_OBJECT_FORMAT_STRING, (unsigned long)(numOfRows + 1)];
+    NSString *newObjectRowText = [NSString stringWithFormat:[_externalStringsDict objectForKey:KEY_LABEL_NEW_OBJECT_FORMAT_STRING], (unsigned long)(numOfRows + 1)];
     BOOL result = [_app.tables.staticTexts[newObjectRowText] waitForExistenceWithTimeout:3];
     XCTAssert(result);
     [_app.tables.staticTexts[newObjectRowText] swipeLeft];
-    [[[XCUIApplication alloc] init].tables.buttons[LABEL_DELETE] tap];
+    [[[XCUIApplication alloc] init].tables.buttons[[_externalStringsDict objectForKey:KEY_LABEL_DELETE]] tap];
     NSUInteger currentNumberOfRows = [_app.tables.cells count];
     XCTAssert(numOfRows == currentNumberOfRows);
 }
