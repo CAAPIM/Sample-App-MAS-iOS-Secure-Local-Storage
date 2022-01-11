@@ -1,0 +1,17 @@
+{
+    "interrupt.monitor.description": "TestInitialScreenHandler",
+    "label.ok": "OK",
+    "label.failure": "Failure",
+    "label.localstorage": "Local Storage",
+    "label.appuser.segment": "AppUser Seg.",
+    "label.app.segment": "App Segment",
+    "label.share": "Share",
+    "label.add.string.object": "Add data of type String",
+    "label.add.image.object": "Add data of type Image",
+    "label.update": "Update",
+    "label.delete": "Delete",
+    "label.updated.object": "Testing Update",
+    "label.new.object.format.string": "NewLocalStorage%lu",
+    "label.permissions.allow.button": "Allow While Using App",
+    "text.localstorage.update.success": "LocalStorageItem updated Successfully"
+}
